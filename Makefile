@@ -33,4 +33,7 @@ gbuild:
 	docker build -t us-west1-docker.pkg.dev/$(GPROJECT_ID)/faiss/faiss-web-service:$(GRELEASE) .
 
 grelease:
-	docker push us-west1-docker.pkg.dev/${GPROJECT_ID}/faiss/faiss-web-service:$(GRELEASE)
+	docker push us-west1-docker.pkg.dev/$(GPROJECT_ID)/faiss/faiss-web-service:$(GRELEASE)
+
+grun:
+	docker run --rm -p 8080:8080 us-west1-docker.pkg.dev/$(PROJECT_ID)/faiss/faiss-web-service:$(GRELEASE)
