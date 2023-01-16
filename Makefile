@@ -26,3 +26,9 @@ test:
 	curl localhost:$(EXTERNAL_PORT)/ping
 	curl localhost:$(EXTERNAL_PORT)/faiss/search -d '{"k": 5, "ids": [1, 2, 3]}'
 	curl localhost:$(EXTERNAL_PORT)/faiss/search -d '{"k": 5, "vectors": [[54.7, 0.3, 0.6, 0.4, 0.1, 0.7, 0.2, 0.0, 0.6, 0.5, 0.3, 0.2, 0.1, 0.9, 0.3, 0.6, 0.2, 0.9, 0.5, 0.0, 0.9, 0.1, 0.9, 0.1, 0.5, 0.5, 0.8, 0.8, 0.5, 0.2, 0.6, 0.2, 0.2, 0.7, 0.1, 0.7, 0.8, 0.2, 0.9, 0.0, 0.4, 0.4, 0.9, 0.0, 0.6, 0.4, 0.4, 0.6, 0.6, 0.2, 0.5, 0.0, 0.1, 0.6, 0.0, 0.0, 0.4, 0.7, 0.5, 0.7, 0.2, 0.5, 0.5, 0.7]]}'
+
+gbuild:
+	docker build -t us-west1-docker.pkg.dev/chronopin-209507/hello-repo/hello-app:v1 .
+
+grelease
+	docker push 123wowow123/faiss-web-service:$(FAISS_RELEASE)
