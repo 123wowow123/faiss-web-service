@@ -1,7 +1,6 @@
 # Faiss Web Service
 
 ### Getting started
-The fastest way to get started is to use [the docker hub image](https://hub.docker.com/r/plippe/faiss-web-service/) with the following command:
 ```sh
 docker run --rm -it -p 9001:5000 123wowow123/faiss-web-service:[FAISS_RELEASE]
 ```
@@ -19,21 +18,6 @@ curl 'localhost:5000/faiss/add' -X POST -d '{"id": 9999, "sentence": "war in ukr
 
 # Faiss remove
 curl 'localhost:5000/faiss/remove'  -X DELETE -d '{"id": 9999}'
-
-
-### Custom index
-By default, the faiss web service will use the files in the `resources` folder. Those can be overwritten by mounting new ones.
-
-```sh
-docker run \
-    --rm \
-    -it \
-    -p 9001:5000 \
-    -v [PATH_TO_RESOURCES]:/opt/faiss-web-service/resources \
-    plippe/faiss-web-service:[FAISS_RELEASE]
-```
-
-Another solution would be to create a new docker image [from `plippe/faiss-web-service`](https://docs.docker.com/engine/reference/builder/#from), that [adds your resources](https://docs.docker.com/engine/reference/builder/#add).
 
 
 ### Production
