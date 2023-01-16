@@ -81,6 +81,8 @@ eg: or better use `make gbuild` & `make grelease`
 
 `watch kubectl get pods`
 
+`curl '34.168.105.198/ping'`
+
 For delete service read doc
 
 #### pyenv
