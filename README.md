@@ -47,6 +47,11 @@ Build docker image
 Upload docker image to repo
 `make release`
 
+#### Google Docker/Kubernetes Commands
+
+https://cloud.google.com/sdk/docs/install
+https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app#cloud-shell
+
 #### pyenv
 
 https://realpython.com/intro-to-pyenv/
