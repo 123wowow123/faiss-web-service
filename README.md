@@ -9,7 +9,7 @@ docker run --rm -it -p 9001:5000 123wowow123/faiss-web-service:[FAISS_RELEASE]
 Once the container is running, you should be able to ping the service:
 ```sh
 # Healthcheck
-curl 'localhost:5000/ping'
+curl '34.168.105.198/ping'
 
 # Faiss search
 curl 'localhost:5000/faiss/search?q=war'
@@ -51,6 +51,37 @@ Upload docker image to repo
 
 https://cloud.google.com/sdk/docs/install
 https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app#cloud-shell
+
+Create cluster and go-live
+`gcloud container clusters create-auto chronopin-cluster`
+
+`gcloud container clusters get-credentials chronopin-cluster --region us-west1`
+
+`kubectl create deployment faiss-web-service --image=us-west1-docker.pkg.dev/chronopin-209507/faiss/faiss-web-service:v1`
+
+`kubectl scale deployment faiss-web-service --replicas=1`
+
+`kubectl autoscale deployment faiss-web-service --cpu-percent=100 --min=1 --max=1`
+
+checks
+`kubectl get pods`
+
+`kubectl expose deployment faiss-web-service --name=faiss-web-lb --type=LoadBalancer --port 80 --target-port 5000`
+
+checks
+`kubectl get service`
+
+Rolling update
+
+eg: or better use `make gbuild` & `make grelease`
+`docker build -t us-west1-docker.pkg.dev/chronopin-209507/faiss/faiss-web-service:v2 .`
+`docker push us-west1-docker.pkg.dev/chronopin-209507/faiss/faiss-web-service:v2`
+
+`kubectl set image deployment/faiss-web-service faiss-web-service=us-west1-docker.pkg.dev/chronopin-209507/faiss/faiss-web-service:v2`
+
+`watch kubectl get pods`
+
+For delete service read doc
 
 #### pyenv
 
