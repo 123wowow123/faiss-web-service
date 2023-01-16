@@ -36,4 +36,4 @@ grelease:
 	docker push us-west1-docker.pkg.dev/$(GPROJECT_ID)/faiss/faiss-web-service:$(GRELEASE)
 
 grun:
-	docker run --rm -p $(EXTERNAL_PORT):5000 us-west1-docker.pkg.dev/$(PROJECT_ID)/faiss/faiss-web-service:$(GRELEASE)
+	docker run --rm -p $(EXTERNAL_PORT):5000 us-west1-docker.pkg.dev/$(GPROJECT_ID)/faiss/faiss-web-service:$(GRELEASE)
