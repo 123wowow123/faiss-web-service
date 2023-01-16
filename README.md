@@ -79,6 +79,3 @@ Setup virtualenv
 Pip freeze requirments
 
 `pip freeze > requirements.txt`
-
-
-
