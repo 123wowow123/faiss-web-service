@@ -25,9 +25,9 @@ run:
 		123wowow123/faiss-web-service:$(FAISS_RELEASE)
 
 test:
-	curl localhost:$(EXTERNAL_PORT)/ping
-	curl 'localhost:5000/faiss/search?q=war'
-	curl 'localhost:5000/faiss/add' -X POST -d '{"id": 9999, "sentence": "war in ukrain"}'
+	curl 'localhost:$(EXTERNAL_PORT)/ping'
+	curl 'localhost:$(EXTERNAL_PORT)faiss/search?q=war'
+	curl 'localhost:$(EXTERNAL_PORT)/faiss/add' -X POST -d '{"id": 9999, "sentence": "war in ukrain"}'
 
 gbuild:
 	docker build -t us-west1-docker.pkg.dev/$(GPROJECT_ID)/faiss/faiss-web-service:$(GRELEASE) .
