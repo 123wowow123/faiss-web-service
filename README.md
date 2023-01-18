@@ -11,7 +11,7 @@ Once the container is running, you should be able to ping the service:
 curl '34.168.105.198/ping'
 
 # Faiss search
-curl 'localhost:5000/faiss/search?q=war'
+curl '34.168.105.198/faiss/search?q=war'
 
 # Faiss add
 curl 'localhost:5000/faiss/add' -X POST -d '{"id": 9999, "sentence": "war in ukrain"}'
