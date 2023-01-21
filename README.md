@@ -11,7 +11,7 @@ Once the container is running, you should be able to ping the service:
 curl '34.168.105.198/ping'
 
 # Faiss search
-curl '34.168.105.198/faiss/search?q=war'
+curl '34.168.105.198/faiss/search?q=war&k=10'
 
 # Faiss add
 curl 'localhost:5000/faiss/add' -X POST -d '{"id": 9999, "sentence": "war in ukrain"}'
@@ -55,13 +55,11 @@ checks
 checks
 `kubectl get service`
 
-Rolling update
+#### Rolling update
 
 eg: or better use `make gbuild` & `make grelease`
-`docker build -t us-west1-docker.pkg.dev/chronopin-209507/faiss/faiss-web-service:v2 .`
-`docker push us-west1-docker.pkg.dev/chronopin-209507/faiss/faiss-web-service:v2`
 
-`kubectl set image deployment/faiss-web-service faiss-web-service=us-west1-docker.pkg.dev/chronopin-209507/faiss/faiss-web-service:v2`
+`kubectl set image deployment/faiss-web-service faiss-web-service=us-west1-docker.pkg.dev/chronopin-209507/faiss/faiss-web-service:v1`
 
 `watch kubectl get pods`
 
