@@ -59,7 +59,7 @@ checks
 
 eg: or better use `make gbuild` & `make grelease`
 
-`kubectl set image deployment/faiss-web-service faiss-web-service=us-west1-docker.pkg.dev/chronopin-209507/faiss/faiss-web-service:v1`
+`make gupdate`
 
 `watch kubectl get pods`
 

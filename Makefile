@@ -35,5 +35,8 @@ gbuild:
 grelease:
 	docker push us-west1-docker.pkg.dev/$(GPROJECT_ID)/faiss/faiss-web-service:$(GRELEASE)
 
+gupdate:
+	kubectl set image deployment/faiss-web-service faiss-web-service=us-west1-docker.pkg.dev/$(GPROJECT_ID)/faiss/faiss-web-service:$(GRELEASE)
+
 grun:
 	docker run --rm -p $(EXTERNAL_PORT):5000 us-west1-docker.pkg.dev/$(GPROJECT_ID)/faiss/faiss-web-service:$(GRELEASE)
