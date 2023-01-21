@@ -5,7 +5,7 @@
 FAISS_RELEASE := latest
 EXTERNAL_PORT := 8080
 GPROJECT_ID := chronopin-209507
-GRELEASE := v1
+GRELEASE := latest
 
 build:
 	docker build \
