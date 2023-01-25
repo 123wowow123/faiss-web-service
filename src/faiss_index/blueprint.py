@@ -20,7 +20,9 @@ def record(setup_state):
 def search():
     try:
         q = request.args.get('q')
-        D, I = blueprint.faiss_index.search_by_sentence(q)
+        k = request.args.get('k', type=int)
+
+        D, I = blueprint.faiss_index.search_by_sentence(q, k)
         tupleList = list(zip(I[0], D[0]))
         res = sorted(
             [{"index": int(i), "match": float(d)} for i, d in tupleList if i != -1],

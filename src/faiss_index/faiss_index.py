@@ -42,7 +42,7 @@ class FaissIndex:
         )
         print(results)
         
-    def search_by_sentence(self, sentence, k = 4):
+    def search_by_sentence(self, sentence, k = 5):
         embedding = self.__get_embeddings__([sentence])
         return self.index.search(embedding, k)
 

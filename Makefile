@@ -3,7 +3,9 @@
 
 # https://github.com/facebookresearch/faiss/tags
 FAISS_RELEASE := latest
-EXTERNAL_PORT := 9001
+EXTERNAL_PORT := 8080
+GPROJECT_ID := chronopin-209507
+GRELEASE := latest
 
 build:
 	docker build \
@@ -23,6 +25,18 @@ run:
 		123wowow123/faiss-web-service:$(FAISS_RELEASE)
 
 test:
-	curl localhost:$(EXTERNAL_PORT)/ping
-	curl localhost:$(EXTERNAL_PORT)/faiss/search -d '{"k": 5, "ids": [1, 2, 3]}'
-	curl localhost:$(EXTERNAL_PORT)/faiss/search -d '{"k": 5, "vectors": [[54.7, 0.3, 0.6, 0.4, 0.1, 0.7, 0.2, 0.0, 0.6, 0.5, 0.3, 0.2, 0.1, 0.9, 0.3, 0.6, 0.2, 0.9, 0.5, 0.0, 0.9, 0.1, 0.9, 0.1, 0.5, 0.5, 0.8, 0.8, 0.5, 0.2, 0.6, 0.2, 0.2, 0.7, 0.1, 0.7, 0.8, 0.2, 0.9, 0.0, 0.4, 0.4, 0.9, 0.0, 0.6, 0.4, 0.4, 0.6, 0.6, 0.2, 0.5, 0.0, 0.1, 0.6, 0.0, 0.0, 0.4, 0.7, 0.5, 0.7, 0.2, 0.5, 0.5, 0.7]]}'
+	curl 'localhost:$(EXTERNAL_PORT)/ping'
+	curl 'localhost:$(EXTERNAL_PORT)faiss/search?q=war'
+	curl 'localhost:$(EXTERNAL_PORT)/faiss/add' -X POST -d '{"id": 9999, "sentence": "war in ukrain"}'
+
+gbuild:
+	docker build -t us-west1-docker.pkg.dev/$(GPROJECT_ID)/faiss/faiss-web-service:$(GRELEASE) .
+
+grelease:
+	docker push us-west1-docker.pkg.dev/$(GPROJECT_ID)/faiss/faiss-web-service:$(GRELEASE)
+
+gupdate:
+	kubectl set image deployment/faiss-web-service faiss-web-service=us-west1-docker.pkg.dev/$(GPROJECT_ID)/faiss/faiss-web-service:$(GRELEASE)
+
+grun:
+	docker run --rm -p $(EXTERNAL_PORT):5000 us-west1-docker.pkg.dev/$(GPROJECT_ID)/faiss/faiss-web-service:$(GRELEASE)

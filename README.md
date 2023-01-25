@@ -1,7 +1,6 @@
 # Faiss Web Service
 
 ### Getting started
-The fastest way to get started is to use [the docker hub image](https://hub.docker.com/r/plippe/faiss-web-service/) with the following command:
 ```sh
 docker run --rm -it -p 9001:5000 123wowow123/faiss-web-service:[FAISS_RELEASE]
 ```
@@ -9,31 +8,16 @@ docker run --rm -it -p 9001:5000 123wowow123/faiss-web-service:[FAISS_RELEASE]
 Once the container is running, you should be able to ping the service:
 ```sh
 # Healthcheck
-curl 'localhost:5000/ping'
+curl '34.168.105.198/ping'
 
 # Faiss search
-curl 'localhost:5000/faiss/search?q=war'
+curl '34.168.105.198/faiss/search?q=war&k=10'
 
 # Faiss add
 curl 'localhost:5000/faiss/add' -X POST -d '{"id": 9999, "sentence": "war in ukrain"}'
 
 # Faiss remove
 curl 'localhost:5000/faiss/remove'  -X DELETE -d '{"id": 9999}'
-
-
-### Custom index
-By default, the faiss web service will use the files in the `resources` folder. Those can be overwritten by mounting new ones.
-
-```sh
-docker run \
-    --rm \
-    -it \
-    -p 9001:5000 \
-    -v [PATH_TO_RESOURCES]:/opt/faiss-web-service/resources \
-    plippe/faiss-web-service:[FAISS_RELEASE]
-```
-
-Another solution would be to create a new docker image [from `plippe/faiss-web-service`](https://docs.docker.com/engine/reference/builder/#from), that [adds your resources](https://docs.docker.com/engine/reference/builder/#add).
 
 
 ### Production
@@ -46,6 +30,44 @@ Build docker image
 
 Upload docker image to repo
 `make release`
+
+
+#### Google Docker/Kubernetes Commands
+
+https://cloud.google.com/sdk/docs/install
+https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app#cloud-shell
+
+Create cluster and go-live
+`gcloud container clusters create-auto chronopin-cluster`
+
+`gcloud container clusters get-credentials chronopin-cluster --region us-west1`
+
+`kubectl create deployment faiss-web-service --image=us-west1-docker.pkg.dev/chronopin-209507/faiss/faiss-web-service:v1`
+
+`kubectl scale deployment faiss-web-service --replicas=1`
+
+`kubectl autoscale deployment faiss-web-service --cpu-percent=100 --min=1 --max=1`
+
+checks
+`kubectl get pods`
+
+`kubectl expose deployment faiss-web-service --name=faiss-web-lb --type=LoadBalancer --port 80 --target-port 5000`
+
+checks
+`kubectl get service`
+
+#### Rolling update
+
+eg: or better use `make gbuild` & `make grelease`
+
+`make gupdate`
+
+`watch kubectl get pods`
+
+`curl '34.168.105.198/ping'`
+
+For delete service read doc
+
 
 #### pyenv
 
@@ -79,6 +101,3 @@ Setup virtualenv
 Pip freeze requirments
 
 `pip freeze > requirements.txt`
-
-
-
