@@ -31,6 +31,7 @@ Build docker image
 Upload docker image to repo
 `make release`
 
+
 #### Google Docker/Kubernetes Commands
 
 https://cloud.google.com/sdk/docs/install
@@ -66,6 +67,7 @@ eg: or better use `make gbuild` & `make grelease`
 `curl '34.168.105.198/ping'`
 
 For delete service read doc
+
 
 #### pyenv
 
