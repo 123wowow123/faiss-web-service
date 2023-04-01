@@ -32,20 +32,17 @@ def record(setup_state):
 
         data = r.json()
         for pin in data['pins']:
-            df = df.append(
-                {'id' : pin['id'], 
-                 'title' : pin['title'], 
-                 'description' : pin['description']
-                }
-                , ignore_index = True)
-
-            # blueprint.faiss_index.add_with_id(id, sentence)
+            df = pd.concat([df, pd.DataFrame.from_records([
+                        {
+                            'id' : pin['id'], 
+                            'title' : pin['title'], 
+                            'description' : pin['description']
+                        }
+                    ])
+                ])
 
     blueprint.faiss_index = FaissIndex(
         df
-        # setup_state.app.config.get('PINS_JSON_PATH')
-        # setup_state.app.config.get('INDEX_PATH'),
-        # setup_state.app.config.get('IDS_VECTORS_PATH')
     )
 
 
