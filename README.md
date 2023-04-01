@@ -17,7 +17,7 @@ curl '34.168.105.198/faiss/search?q=war&k=10'
 curl 'localhost:5000/faiss/add' -X POST -d '{"id": 9999, "sentence": "war in ukrain"}'
 
 # Faiss remove
-curl 'localhost:5000/faiss/remove'  -X DELETE -d '{"id": 9999}'
+curl 'localhost:5000/faiss/remove' -X DELETE -d '{"id": 9999}'
 
 
 ### Production
