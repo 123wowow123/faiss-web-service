@@ -4,17 +4,16 @@ from sqlalchemy import true
 from werkzeug.exceptions import BadRequest
 from faiss_index.faiss_index import FaissIndex
 import requests
+import pandas as pd
 
 blueprint = Blueprint('faiss_index', __name__)
 
 
 @blueprint.record_once
 def record(setup_state):
-    blueprint.faiss_index = FaissIndex(
-        setup_state.app.config.get('PINS_JSON_PATH')
-        # setup_state.app.config.get('INDEX_PATH'),
-        # setup_state.app.config.get('IDS_VECTORS_PATH')
-    )
+
+    # create an Empty DataFrame object
+    df = pd.DataFrame(columns = ['id', 'title', 'description'])
 
     count = 0
     next_url = 'https://www.chronopin.com/api/main?from_date_time=0001-01-01T00:00:00.000Z'
@@ -33,9 +32,21 @@ def record(setup_state):
 
         data = r.json()
         for pin in data['pins']:
-            id = pin['id']
-            sentence = pin['title'] + " " + pin['description']
-            blueprint.faiss_index.add_with_id(id, sentence)
+            df = df.append(
+                {'id' : pin['id'], 
+                 'title' : pin['title'], 
+                 'description' : pin['description']
+                }
+                , ignore_index = True)
+
+            # blueprint.faiss_index.add_with_id(id, sentence)
+
+    blueprint.faiss_index = FaissIndex(
+        df
+        # setup_state.app.config.get('PINS_JSON_PATH')
+        # setup_state.app.config.get('INDEX_PATH'),
+        # setup_state.app.config.get('IDS_VECTORS_PATH')
+    )
 
 
 @blueprint.route('/faiss/search')

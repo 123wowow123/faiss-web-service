@@ -6,13 +6,13 @@ from sentence_transformers import SentenceTransformer
 
 class FaissIndex:
 
-    def __init__(self, json_path):
+    def __init__(self, df, json_path):
         self.model = SentenceTransformer('bert-base-nli-mean-tokens')
         
-        with open(json_path, encoding='utf-8-sig') as fp:
-            data = json.loads(''.join(line.strip() for line in fp))
+        # with open(json_path, encoding='utf-8-sig') as fp:
+        #     data = json.loads(''.join(line.strip() for line in fp))
 
-        df = pd.json_normalize(data)
+        # df = pd.json_normalize(data)
 
         # df = pd.read_json(json_path)
         df['searchColumn'] = df['title'] + " " + df['description']
