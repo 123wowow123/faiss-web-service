@@ -11,8 +11,6 @@ blueprint = Blueprint('faiss_index', __name__)
 
 @blueprint.record_once
 def record(setup_state):
-
-    # create an Empty DataFrame object
     df = pd.DataFrame(columns = ['id', 'title', 'description'])
 
     count = 0
