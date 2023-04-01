@@ -3,17 +3,37 @@ from flask import Blueprint, jsonify, request
 from sqlalchemy import true
 from werkzeug.exceptions import BadRequest
 from faiss_index.faiss_index import FaissIndex
+import requests
 
 blueprint = Blueprint('faiss_index', __name__)
 
 
 @blueprint.record_once
 def record(setup_state):
-    blueprint.faiss_index = FaissIndex(
-        setup_state.app.config.get('PINS_JSON_PATH')
-        # setup_state.app.config.get('INDEX_PATH'),
-        # setup_state.app.config.get('IDS_VECTORS_PATH')
-    )
+    # blueprint.faiss_index = FaissIndex(
+    #     setup_state.app.config.get('PINS_JSON_PATH')
+    #     # setup_state.app.config.get('INDEX_PATH'),
+    #     # setup_state.app.config.get('IDS_VECTORS_PATH')
+    # )
+
+    count = 0
+    next_url = 'https://www.chronopin.com/api/main?from_date_time=0000-01-01T00:00:00.000Z'
+    while (next_url):
+        count = count + 1
+        print("Request count: " + count)
+
+        # Making a GET request
+        r = requests.get(next_url)
+        link = r.headers['link']
+
+        if r.links.get('next'):
+            next_url = r.links['next']['url']
+
+        data = r.json()
+        for pin in data['pins']:
+            id = pin['id']
+            sentence = pin['title'] + " " + pin['description']
+            FaissIndex(id, sentence)
 
 
 @blueprint.route('/faiss/search')
