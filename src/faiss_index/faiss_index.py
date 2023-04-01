@@ -34,7 +34,7 @@ class FaissIndex:
         ntotal = self.index.ntotal
         print(f'{ntotal} indexed')
 
-        D, I = self.search_by_sentence("war in ukrain") 
+        D, I = self.search_by_sentence("'war' in ukrain") 
         tupleList = list(zip(I[0], D[0]))
         results = sorted(
             [{"index": i, "match": d, "text": f'{df.loc[df["id"] == i]["searchColumn"]}'} for i, d in tupleList if i != -1],
