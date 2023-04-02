@@ -72,7 +72,9 @@ def add():
     try:
         json = request.get_json(force=True)
         id = json['id']
-        sentence = json['sentence']
+        title = json['title']
+        description = json['description']
+        sentence = f"{title} {description}" 
         res = blueprint.faiss_index.add_with_id(id, sentence)
         return jsonify({'res': "success"})
 
