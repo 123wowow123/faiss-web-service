@@ -11,9 +11,9 @@ Once the container is running, you should be able to ping the service:
 curl '34.168.105.198/ping'
 
 # Faiss search
-curl 'localhost:5000/faiss/search?q='Demon+Slayer'+Season+3+Gets+An+exact+Release+Date+And+New+English+Trailer&k=10'
-
 curl 'localhost:5000/faiss/search?q=%E2%80%98Demon%20Slayer%E2%80%99%20Season%203%20Gets%20An%20Exact%20Release%20Date%20And%20New%20English%20Trailer&k=20'
+
+curl "http://34.168.105.198/faiss/search?q=Debt%20ceiling&k=20"
 
 
 # Faiss add
