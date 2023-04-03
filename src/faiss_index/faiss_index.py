@@ -8,7 +8,9 @@ class FaissIndex:
 
     def __init__(self, df):
         # self.model = SentenceTransformer('bert-base-nli-mean-tokens')
-        self.model = SentenceTransformer('distilbert-base-nli-stsb-mean-tokens')
+        # self.model = SentenceTransformer('flax-sentence-embeddings/all_datasets_v3_mpnet-base')
+        self.model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
+
         
         df['searchColumn'] = df['title'] + " " + df['description']
         sentences = df['searchColumn'].tolist()
@@ -33,7 +35,7 @@ class FaissIndex:
         ntotal = self.index.ntotal
         print(f'{ntotal} indexed')
 
-        test_search = "Street Fighter 6"
+        test_search = "street fighter"
         print(f'Test search term: {test_search}')
         D, I = self.search_by_sentence(test_search, 10) 
         tupleList = list(zip(I[0], D[0]))
