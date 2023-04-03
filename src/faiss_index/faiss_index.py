@@ -7,7 +7,8 @@ from sentence_transformers import SentenceTransformer
 class FaissIndex:
 
     def __init__(self, df):
-        self.model = SentenceTransformer('bert-base-nli-mean-tokens')
+        # self.model = SentenceTransformer('bert-base-nli-mean-tokens')
+        self.model = SentenceTransformer('distilbert-base-nli-stsb-mean-tokens')
         
         df['searchColumn'] = df['title'] + " " + df['description']
         sentences = df['searchColumn'].tolist()
@@ -21,7 +22,9 @@ class FaissIndex:
         quantizer = faiss.IndexFlatL2(d)  # this remains the same
         self.index = faiss.IndexIVFPQ(quantizer, d, nlist, m, bits)
                                         # 8 specifies that each sub-vector is encoded as 8 bits
+
         if not self.index.is_trained:
+            print('Training needed')
             self.index.train(sentence_embeddings)
             
         self.index.add_with_ids(sentence_embeddings, ids)
@@ -30,7 +33,9 @@ class FaissIndex:
         ntotal = self.index.ntotal
         print(f'{ntotal} indexed')
 
-        D, I = self.search_by_sentence("'war' in ukrain") 
+        test_search = "Street Fighter 6"
+        print(f'Test search term: {test_search}')
+        D, I = self.search_by_sentence(test_search, 10) 
         tupleList = list(zip(I[0], D[0]))
         results = sorted(
             [{"index": i, "match": d, "text": f'{df.loc[df["id"] == i]["searchColumn"]}'} for i, d in tupleList if i != -1],
