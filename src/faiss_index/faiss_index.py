@@ -7,6 +7,8 @@ from sentence_transformers import SentenceTransformer
 class FaissIndex:
 
     def __init__(self, df):
+        # https://www.sbert.net/docs/pretrained_models.html#model-overview
+        
         # self.model = SentenceTransformer('bert-base-nli-mean-tokens')
         # self.model = SentenceTransformer('flax-sentence-embeddings/all_datasets_v3_mpnet-base')
         self.model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
