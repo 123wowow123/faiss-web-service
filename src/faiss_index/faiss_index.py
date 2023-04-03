@@ -21,7 +21,9 @@ class FaissIndex:
         quantizer = faiss.IndexFlatL2(d)  # this remains the same
         self.index = faiss.IndexIVFPQ(quantizer, d, nlist, m, bits)
                                         # 8 specifies that each sub-vector is encoded as 8 bits
-        self.index.train(sentence_embeddings)
+        if not self.index.is_trained:
+            self.index.train(sentence_embeddings)
+            
         self.index.add_with_ids(sentence_embeddings, ids)
 
         ### sanity check
