@@ -5,6 +5,7 @@ from werkzeug.exceptions import BadRequest
 from faiss_index.faiss_index import FaissIndex
 import requests
 import pandas as pd
+from bs4 import BeautifulSoup
 
 blueprint = Blueprint('faiss_index', __name__)
 
@@ -34,7 +35,7 @@ def record(setup_state):
                         {
                             'id' : pin['id'], 
                             'title' : pin['title'], 
-                            'description' : pin['description']
+                            'description' : BeautifulSoup(pin['description'], 'html.parser').get_text()
                         }
                     ])
                 ])
