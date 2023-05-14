@@ -33,9 +33,9 @@ def record(setup_state):
         for pin in data['pins']:
             df = pd.concat([df, pd.DataFrame.from_records([
                         {
-                            'id' : pin['id'], 
-                            'title' : pin['title'], 
-                            'description' : BeautifulSoup(pin['description'], 'html.parser').get_text()
+                            'id' : pin.get('id', ''), 
+                            'title' : pin.get('title', ''), 
+                            'description' : BeautifulSoup(pin.get('description', ''), 'html.parser').get_text()
                         }
                     ])
                 ])
