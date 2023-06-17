@@ -13,11 +13,11 @@ curl '34.168.105.198/ping'
 # Faiss search
 curl 'localhost:5000/faiss/search?q=%E2%80%98Demon%20Slayer%E2%80%99%20Season%203%20Gets%20An%20Exact%20Release%20Date%20And%20New%20English%20Trailer&k=20'
 
-curl "http://34.168.105.198/faiss/search?q=Debt%20ceiling&k=20"
+curl "http://34.168.105.198/faiss/search?q=war%20in%20ukraine%20food%20shortages%20twitter%20live%20scope&k=20"
 
 
 # Faiss add
-curl 'localhost:5000/faiss/add' -X POST -d '{"id": 9999, "title": "war in ukrain", "description": "food shortages", "media": [{"html": "<div>twitter live scope</div>"}]}'
+curl 'localhost:5000/faiss/add' -X POST -d '{"id": 9999, "title": "war in ukraine", "description": "food shortages", "media": [{"html": "<div>twitter live scope</div>"}]}'
 
 # Faiss remove
 curl 'localhost:5000/faiss/remove' -X DELETE -d '{"id": 9999}'
