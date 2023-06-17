@@ -53,6 +53,7 @@ class FaissIndex:
 
     def add_with_id(self, id, sentence):
         sentence_embeddings = self.__get_embeddings__([sentence])
+        self.index.remove_by_id(id)
         return self.index.add_with_ids(sentence_embeddings, [id])
 
     def remove_by_id(self, id):
