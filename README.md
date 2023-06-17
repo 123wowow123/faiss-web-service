@@ -17,7 +17,7 @@ curl "http://34.168.105.198/faiss/search?q=Debt%20ceiling&k=20"
 
 
 # Faiss add
-curl 'localhost:5000/faiss/add' -X POST -d '{"id": 9999, "sentence": "war in ukrain"}'
+curl 'localhost:5000/faiss/add' -X POST -d '{"id": 9999, "title": "war in ukrain", "description": "food shortages", "media": [{"html": "<div>twitter live scope</div>"}]}'
 
 # Faiss remove
 curl 'localhost:5000/faiss/remove' -X DELETE -d '{"id": 9999}'

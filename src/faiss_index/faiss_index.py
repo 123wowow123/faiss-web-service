@@ -14,7 +14,7 @@ class FaissIndex:
         self.model = SentenceTransformer('sentence-transformers/all-mpnet-base-v2')
 
         
-        df['searchColumn'] = df['title'] + " " + df['description']
+        df['searchColumn'] = df['title'] + " " + df['description'] + " " + df['mediaHtmlContent']
         sentences = df['searchColumn'].tolist()
         ids = df["id"].tolist()
         sentence_embeddings = self.__get_embeddings__(sentences)

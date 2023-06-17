@@ -31,11 +31,16 @@ def record(setup_state):
 
         data = r.json()
         for pin in data['pins']:
+            # test = next(iter(pin.get('media', [])), {}).get('html', '')
+            # if bool(test):
+            #     print(test)
+
             df = pd.concat([df, pd.DataFrame.from_records([
                         {
                             'id' : pin.get('id', ''), 
                             'title' : pin.get('title', ''), 
-                            'description' : BeautifulSoup(pin.get('description', ''), 'html.parser').get_text()
+                            'description' : BeautifulSoup(pin.get('description', ''), 'html.parser').get_text(),
+                            'mediaHtmlContent' : BeautifulSoup(next(iter(pin.get('media', [])), {}).get('html', ''), 'html.parser').get_text()
                         }
                     ])
                 ])
@@ -71,11 +76,17 @@ def search():
 @blueprint.route('/faiss/add', methods=['POST'])
 def add():
     try:
+        mediaHtmlContent = ''
         json = request.get_json(force=True)
         id = json['id']
         title = json['title']
-        description = json['description']
-        sentence = f"{title} {description}" 
+        description = BeautifulSoup(json.get('description', ''), 'html.parser').get_text()
+        media = json['media']
+        if bool(media):
+            mediaHtmlContent = next(iter(media), {}).get('html', '')
+            mediaHtmlContent = BeautifulSoup(mediaHtmlContent, 'html.parser').get_text()
+
+        sentence = f"{title} {description} {mediaHtmlContent}" 
         res = blueprint.faiss_index.add_with_id(id, sentence)
         return jsonify({'res': "success"})
 
