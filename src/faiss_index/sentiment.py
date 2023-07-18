@@ -1,5 +1,4 @@
 from transformers import pipeline
-
 from transformers import AutoModelForSequenceClassification
 from transformers import AutoTokenizer, AutoConfig
 import numpy as np
@@ -7,17 +6,15 @@ from scipy.special import softmax
 
 class Sentiment:
 
-    def __init__(self, df):
+    def __init__(self):
         # https://huggingface.co/cardiffnlp/twitter-xlm-roberta-base-sentiment
         MODEL = f"cardiffnlp/twitter-xlm-roberta-base-sentiment"
         self.tokenizer = AutoTokenizer.from_pretrained(MODEL)
         self.config = AutoConfig.from_pretrained(MODEL)
 
         self.model = AutoModelForSequenceClassification.from_pretrained(MODEL)
+        self.tokenizer.save_pretrained(MODEL)
         self.model.save_pretrained(MODEL)
-
-        result = self.getSentiment("T'estimo!")
-        print(result)
 
     def getSentiment(self, sentence):
         result = 0
@@ -32,16 +29,16 @@ class Sentiment:
             l = self.config.id2label[ranking[i]]
             s = scores[ranking[i]]
 
-            if l == "Positive":
+            if l == "positive":
                 result += float(s) * 1
-            elif l == "Neutral":
+            elif l == "neutral":
                 result += float(s) * 0
-            elif l == "Negative":
+            elif l == "negative":
                 result += float(s) * -1
 
         return result
 
-    def __preprocess__(text):
+    def __preprocess__(self,text):
         new_text = []
         for t in text.split(" "):
             t = '@user' if t.startswith('@') and len(t) > 1 else t
