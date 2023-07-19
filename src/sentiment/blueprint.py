@@ -1,7 +1,7 @@
 from jsonschema import validate, ValidationError
 from werkzeug.exceptions import BadRequest
 from flask import Blueprint, jsonify, request
-from faiss_index.sentiment import Sentiment
+from sentiment.sentiment import Sentiment
 from bs4 import BeautifulSoup
 
 blueprint = Blueprint('sentiment', __name__)
