@@ -13,8 +13,8 @@ class Sentiment:
         self.config = AutoConfig.from_pretrained(MODEL)
 
         self.model = AutoModelForSequenceClassification.from_pretrained(MODEL)
-        self.tokenizer.save_pretrained(MODEL)
-        self.model.save_pretrained(MODEL)
+        # self.tokenizer.save_pretrained(MODEL)
+        # self.model.save_pretrained(MODEL)
 
     def getSentiment(self, sentence):
         result = 0
