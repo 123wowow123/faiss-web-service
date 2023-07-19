@@ -2,6 +2,7 @@ FROM continuumio/anaconda3
 
 RUN conda install -c conda-forge pytorch faiss-cpu
 RUN conda install -c conda-forge sentence-transformers
+RUN conda install -c conda-forge protobuf
 
 COPY resources /opt/faiss-web-service/resources
 COPY src /opt/faiss-web-service/src
