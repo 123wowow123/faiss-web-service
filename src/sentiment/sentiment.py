@@ -63,23 +63,23 @@ def ensure_tokenizer_max_length(tokenizer, model):
     """
     max_length = getattr(tokenizer, "model_max_length", None)
     if max_length is None or max_length > MAX_SEQUENCE_LENGTH:
-        LOG.warning(f"Tokenizer's model_max_length={max_length} probably wasn't set correctly.")
+        print(f"Tokenizer's model_max_length={max_length} probably wasn't set correctly.")
 
         default_lengths = getattr(tokenizer, "max_model_input_sizes", {})
         if default_lengths:
             k, v = next(iter(default_lengths.items()))
-            LOG.warning(f"Found and will use default max length for model {k}={v}.")
+            print(f"Found and will use default max length for model {k}={v}.")
             max_length = v
         else:
             model_len = model.config.to_dict().get("max_position_embeddings")
             if model_len is not None:
-                LOG.warning(f"Found no default max length but model defines max_position_embeddings={model_len}")
+                print(f"Found no default max length but model defines max_position_embeddings={model_len}")
                 if model_len in (514, 130):
                     model_len -= 2
-                    LOG.warning(f"Corrected max length to be {model_len}.")
+                    print(f"Corrected max length to be {model_len}.")
                 max_length = model_len
             else:
-                LOG.warning(f"Couldn't determine appropriate max length. Will use default of {MAX_SEQUENCE_LENGTH}.")
+                print(f"Couldn't determine appropriate max length. Will use default of {MAX_SEQUENCE_LENGTH}.")
                 max_length = MAX_SEQUENCE_LENGTH
 
     tokenizer.model_max_length = max_length
