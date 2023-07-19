@@ -8,7 +8,7 @@ class Sentiment:
 
     def __init__(self):
         # https://huggingface.co/cardiffnlp/twitter-xlm-roberta-base-sentiment
-        MODEL = f"cardiffnlp/twitter-xlm-roberta-base-sentiment"
+        MODEL = f"cardiffnlp/twitter-roberta-base-sentiment-latest"
         self.tokenizer = AutoTokenizer.from_pretrained(MODEL)
         self.config = AutoConfig.from_pretrained(MODEL)
 
