@@ -23,7 +23,7 @@ curl 'localhost:5000/faiss/add' -X POST -d '{"id": 9999, "title": "war in ukrain
 curl 'localhost:5000/faiss/remove' -X DELETE -d '{"id": 9999}'
 
 # Sentiment Get
-curl 'localhost:5000/sentiment' -X POST -d '{"title": "war in ukraine", "description": "food shortages", "media": [{"html": "<div>twitter live scope</div>"}]}'
+curl 'http://34.168.105.198/sentiment' -X POST -d '{"title": "war in ukraine", "description": "food shortages", "media": [{"html": "<div>twitter live scope</div>"}]}'
 
 ### Production
 The application runs with Flask's build in server. Flask's documentation clearly states [it is not suitable for production](http://flask.pocoo.org/docs/1.1.x/deploying/).
