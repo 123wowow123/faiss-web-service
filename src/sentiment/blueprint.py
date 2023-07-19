@@ -17,7 +17,7 @@ def getSentiment():
     try:
         mediaHtmlContent = ''
         json = request.get_json(force=True)
-        title = json['title']
+        title = json.get('title', '')
         description = BeautifulSoup(json.get('description', ''), 'html.parser').get_text()
         media = json['media']
         if bool(media):
