@@ -3,6 +3,7 @@ from transformers import AutoModelForSequenceClassification
 from transformers import AutoTokenizer, AutoConfig
 import numpy as np
 from scipy.special import softmax
+from bs4 import BeautifulSoup
 
 class Sentiment:
 
@@ -18,6 +19,19 @@ class Sentiment:
         ensure_tokenizer_max_length(self.tokenizer, self.model)
         # self.tokenizer.save_pretrained(MODEL)
         # self.model.save_pretrained(MODEL)
+
+    def cleanAndGetSentiment(self, json):
+        mediaHtmlContent = ''
+        title = json.get('title', '')
+        description = BeautifulSoup(json.get('description', ''), 'html.parser').get_text()
+        media = json.get('media')
+        if bool(media):
+            mediaHtmlContent = next(iter(media), {}).get('html', '')
+            mediaHtmlContent = BeautifulSoup(mediaHtmlContent, 'html.parser').get_text()
+
+        sentence = f"{title} {description} {mediaHtmlContent}" 
+        score = self.getSentiment(sentence)
+        return score
 
     def getSentiment(self, sentence):
         result = 0
@@ -42,7 +56,7 @@ class Sentiment:
         return result
 
     def __preprocess__(self,text):
-        maxWords = 350
+        maxWords = 300
         new_text = []
         for t in text.split(" "):
             t = '@user' if t.startswith('@') and len(t) > 1 else t
