@@ -61,6 +61,10 @@ Create cluster and go-live
 
 `gcloud container clusters get-credentials chronopin-cluster --region us-west1`
 
+`kubectl create -f kube/deployment.yaml`
+
+Older manual go-live
+---
 `kubectl create deployment faiss-web-service --image=us-west1-docker.pkg.dev/chronopin-209507/faiss/faiss-web-service:latest`
 
 `kubectl scale deployment faiss-web-service --replicas=1`

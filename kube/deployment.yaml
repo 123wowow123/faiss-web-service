@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: faiss-web-service
+  labels:
+    app: faiss-web-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: AI
+      role: backend
+  template:
+    metadata:
+      labels:
+        app: AI
+        role: backend
+    spec:
+      containers:
+      - name: faiss-web-service
+        image: us-west1-docker.pkg.dev/chronopin-209507/faiss/faiss-web-service:latest
+        resources:
+          requests:
+            memory: "3000Mi"
+            cpu: "0.5"
+          limits:
+            memory: "4000Mi"
+            cpu: "1"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+          protocol: TCP
+      imagePullSecrets:
+      - name: regcred
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: faiss-web-lb
+# spec:
+#   type: LoadBalancer
+#   ports:
+#   - port: 80
+#     protocol: TCP
+#     name: http
+#     targetPort: 5000
+#   selector:
+#     app: AI
+#     role: backend
+---
