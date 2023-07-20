@@ -19,7 +19,7 @@ def getSentiment():
         json = request.get_json(force=True)
         title = json.get('title', '')
         description = BeautifulSoup(json.get('description', ''), 'html.parser').get_text()
-        media = json['media']
+        media = json.get('media')
         if bool(media):
             mediaHtmlContent = next(iter(media), {}).get('html', '')
             mediaHtmlContent = BeautifulSoup(mediaHtmlContent, 'html.parser').get_text()
@@ -27,6 +27,7 @@ def getSentiment():
         sentence = f"{title} {description} {mediaHtmlContent}" 
         score = blueprint.Sentiment.getSentiment(sentence)
         return jsonify({'score': score})
+
 
     except (BadRequest, ValidationError) as e:
         print('Bad request', e)
